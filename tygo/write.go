@@ -322,6 +322,15 @@ func (g *PackageGenerator) writeStructFields(s *strings.Builder, fields []*ast.F
 
 				optional = jsonTag.HasOption("omitempty")
 			}
+			bsonTag, err := tags.Get("bson")
+			if err == nil {
+				name = bsonTag.Name
+				if name == "-" {
+					continue
+				}
+
+				optional = bsonTag.HasOption("omitempty")
+			}
 			yamlTag, err := tags.Get("yaml")
 			if err == nil {
 				name = yamlTag.Name
